@@ -30,16 +30,16 @@ RUN apt-get install -y --no-install-recommends \
                     swig
 
 RUN python3 -m pip install gcovr
-RUN mkdir build && \
-    cd build && \
-    cmake -DBUILD_CPP=ON \
+RUN mkdir build
+WORKDIR build
+RUN  cmake -DBUILD_CPP=ON \
           -DBUILD_PYTHON=ON \
           -DBUILD_TUTORIALS=ON \
           -DBUILD_TESTS=ON \
           -DBUILD_DOC=OFF \
-          -DCMAKE_BUILD_TYPE=Release .. && \
-    make -j$(nproc) && \
-    make install
+          -DCMAKE_BUILD_TYPE=Release ..
+RUN make -j$(nproc)
+RUN make install
 
 
 
