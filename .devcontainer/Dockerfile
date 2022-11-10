@@ -30,8 +30,8 @@ RUN apt-get install -y --no-install-recommends \
                     swig
 
 RUN python3 -m pip install gcovr
-RUN mkdir build
-WORKDIR build
+RUN rm -rf /workspaces/Fields2Cover/build && mkdir /workspaces/Fields2Cover/build
+WORKDIR /workspaces/Fields2Cover/build
 RUN  cmake -DBUILD_CPP=ON \
           -DBUILD_PYTHON=ON \
           -DBUILD_TUTORIALS=ON \
