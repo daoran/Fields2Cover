@@ -36,6 +36,40 @@ Fields2Cover library provides several algorithms to plan the coverage path on an
 
 Although the development of this project is focused on offline planning of agricultural vehicles, the library accepts pull requests from other types of coverage planners.
 
+
+F2C version 2.0
+---------------
+
+The version 2.0 of Fields2Cover comes with support for non-convex fields and fields with obstacles!! This has been huge request from the community and finally it's here.
+
+A quick list of new additions to the library:
+
+#. Decomposition algorithms:
+
+   * Trapezoidal and Boustrophedon decomposition. Those algorithms are useful to split any concave field into several convex sub-fields.
+
+#. Route planner:
+
+   * Route optimizer using `OR-tools <https://developers.google.com/optimization>`__ can be used to order the swaths, instead of just using a known pattern.
+
+   * Support for a point used as the start and end points of the route.
+
+#. Path planner:
+
+   * Support for routes provided by the route optimizer.
+
+#. Swath generator:
+
+   * Speed improvement on swath generation.
+
+   * New cost function: `NSwathModified`. It uses an approximation to compute the number of swaths, reducing computation costs.
+
+#. Many bugs fixed.
+
+
+
+
+
 Citing
 ------
 
@@ -89,7 +123,7 @@ Some packages are needed before compiling the package:
    sudo apt-get install --no-install-recommends build-essential ca-certificates cmake \
         doxygen g++ git libeigen3-dev libgdal-dev libpython3-dev python3 python3-pip \
         python3-matplotlib python3-tk lcov libgtest-dev libtbb-dev swig libgeos-dev \
-        gnuplot
+        gnuplot libtinyxml2-dev nlohmann-json3-dev
    python3 -m pip install gcovr
 
 Also, `OR-tools <https://developers.google.com/optimization>`__ for C++ is needed. Follow its installation process.
@@ -99,13 +133,13 @@ Compilation
 ^^^^^^^^^^^
 
 First, clone this repository.
-Then, from the main folder of the project:
+Then, from the source code folder of the project:
 
 .. code-block:: console
 
    mkdir -p build;
    cd build;
-   cmake -DCMAKE_BUILD_TYPE=Release ..;
+   cmake -DCMAKE_BUILD_TYPE=Release -DUSE_ORTOOLS_RELEASE=ON ..;
    make -j$(nproc);
 
 Finally, you can install it as:
@@ -129,7 +163,7 @@ To add Fields2Cover into your CMakeLists.txt, it is as easy as:
 Compilation with python interface
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As without the interface, clone this repository.
+Assuming you have satisfied the "Requirements on Linux" and completed the initial "Compilation" step.
 
 Install the packages required as:
 
@@ -138,7 +172,7 @@ Install the packages required as:
    sudo apt install swig python3-pytest
 
 
-Then, from the main folder of the project:
+Then, from the source code folder of the project, adjust the BUILD_PYTHON option of the existing build:
 
 .. code-block:: console
 
@@ -196,7 +230,7 @@ Credits and more info
 ---------------------
 
 This library is only possible thanks to `GDAL <https://gdal.org/index.html>`_ who provides the basic types of this library.
-Other great libraries that made Fields2Cover possible are `OR-tools <https://developers.google.com/optimization>`__, `hbanzhaf/steering_functions <https://github.com/hbanzhaf/steering_functions>`_, `nlohmann/json <https://github.com/nlohmann/json/>`_, `leethomason/tinyxml2 <https://github.com/leethomason/tinyxml2>`_, `ttk592/spline <https://github.com/ttk592/spline>`_ and `lava/matplotlib-cpp <https://github.com/lava/matplotlib-cpp>`_
+Other great libraries that made Fields2Cover possible are `OR-tools <https://developers.google.com/optimization>`__, `hbanzhaf/steering_functions <https://github.com/hbanzhaf/steering_functions>`_, `nlohmann/json <https://github.com/nlohmann/json/>`_, `leethomason/tinyxml2 <https://github.com/leethomason/tinyxml2>`_, `joshhooker/CubicSplineClass <https://github.com/joshhooker/CubicSplineClass>`_ and `alandefreitas/matplotplusplus <https://github.com/alandefreitas/matplotplusplus>`_
 
 
 This code repository is part of the project Fields2Cover which is (partly) financed by the Dutch Research Council (NWO).
